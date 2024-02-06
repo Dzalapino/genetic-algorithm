@@ -66,11 +66,11 @@ def calculate_time(order: list[int]) -> int:
 
         current_time = processing_times[current_operations.tasks[0].resource]  # Get the current time of the first resource
 
-        for job in current_operations.tasks:
-            if current_time < processing_times[job.resource]:  # If the current time is less than the resource time
-                current_time = processing_times[job.resource]  # Update the current time
-            current_time += job.time  # Add the job time to the current time
-            processing_times[job.resource] = current_time  # Update the resource processing time
+        for task in current_operations.tasks:  # Iterate through the tasks
+            if current_time < processing_times[task.resource]:  # If the current time is less than the resource time
+                current_time = processing_times[task.resource]  # Update the current time
+            current_time += task.time  # Add the task time to the current time
+            processing_times[task.resource] = current_time  # Update the resource processing time
 
     return max(processing_times.values())  # Return the maximum processing time
 
@@ -92,21 +92,21 @@ def generate_random_order() -> list[int]:
     """
     order = list(range(1, NUM_INSTRUCTIONS + 1))
     random.shuffle(order)
-
     return order
 
 
 def mutate_population(population: list[list[int]], mutation_rate: float):
     """
-    Mutate the population by mutating each individual
+    Mutate the population by mutating each order
     :param population: The population to mutate
     :param mutation_rate: The mutation rate
     :return: None (the population is updated in place)
     """
-    for individual in population:
+    for order in population:
         if random.random() < mutation_rate:
-            index1, index2 = random.sample(range(len(individual)), 2)
-            individual[index1], individual[index2] = individual[index2], individual[index1]
+            # Take 2 random indices and swap the elements at those indices
+            index1, index2 = random.sample(range(len(order)), 2)
+            order[index1], order[index2] = order[index2], order[index1]
 
 
 def crossover(parents: list[list[int]], crossover_rate: float) -> list[list[int]]:
