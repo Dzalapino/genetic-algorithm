@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 NUM_INSTRUCTIONS = 50
 NUM_RESOURCES = 10
 FITNESS_FACTOR = 1000000
-TOURNAMENT_SIZE = 3
+TOURNAMENT_SIZE = 4
 
 
 class Task:
